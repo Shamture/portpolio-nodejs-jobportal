@@ -1,7 +1,8 @@
 {
   "name": "jobportal",
   "version": "1.0.0",
-  "description": "",
+  "description": "jobportal",
+  "homepage": "https://github.com/asimashraf/portpolio-nodejs-jobportal",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

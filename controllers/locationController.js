@@ -3,8 +3,9 @@ const { Location, validate } = require('../models/location');
 
 
 exports.location_list = async (req, res) => {
+    throw new Error('Could not get locations');
     const locations = await Location.find().sort('location');
-    res.send(locations);
+    res.send(locations);  
 };
 
 exports.add_new_location = async (req, res) => {
@@ -42,5 +43,4 @@ exports.delete_a_location = async (req, res) => {
     const location = await Location.findByIdAndRemove(req.params.id);
     if (!location) return res.status(404).send('The location with given ID was not found');
     res.send(location);
-}
-
+};

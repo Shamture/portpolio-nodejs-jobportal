@@ -1,3 +1,7 @@
+require('express-async-errors');
+const winston = require('winston');
+require('winston-mongodb');
+const error = require('./middleware/error');
 const config = require('config');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
@@ -9,6 +13,12 @@ const jobTypes = require('./routes/jobtypes');
 const advertisements = require('./routes/advertisements');
 const users = require('./routes/users');
 const auth = require('./routes/auths');
+
+winston.add(winston.transports.File, { filename: 'logfile.log' });
+winston.add(winston.transports.MongoDB, { 
+    db: 'mongodb://localhost/jobportal',
+    level: 'error'
+});
 
 if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined.');
@@ -25,6 +35,8 @@ app.use('/api/jobTypes', jobTypes);
 app.use('/api/advertisements', advertisements);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+
+app.use(error);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
